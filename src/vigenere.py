@@ -16,6 +16,7 @@ ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 # including key.
 VIGENERE_SQUARE = {ALPHABET[x]: list(ALPHABET[x:] + ALPHABET[:x]) for x in range(len(ALPHABET))}
 
+# Encipher text
 if args.encipher:
     # Ask user for a keyword, then uppercase it
     keyword = raw_input("Enter Keyword: ").upper()
@@ -25,12 +26,14 @@ if args.encipher:
     keytext = (keyword * ((len(plaintext)/len(keyword)) + 1))[:len(plaintext)]
     # Create a list of integers where each element is the index of the corresponding character in the plaintext, in the ALPHABET
     cipherlist = [ALPHABET.find(plaintext[i].upper()) for i in range(len(plaintext))]
-    # Build a new string 
+    # Build a new string using characters from the dict by using a list comprehension, then joining the elements of that list.
     ciphertext = "".join([VIGENERE_SQUARE[keytext[n]][cipherlist[n]] for n in range(len(plaintext))])
     print "Key:        ", keytext
     print "plaintext:  ", plaintext
     print "CIPHERTEXT: ", ciphertext
 
+# Decipher text
+# Performs the same operations as encipher, but swapping the ALPHABET and the dict.
 else:
     keyword = raw_input("Enter Keyword: ").upper()
     ciphertext = raw_input("Enter CIPHERTEXT: ").upper()
